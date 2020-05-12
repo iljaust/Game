@@ -3,9 +3,9 @@ package com.company.game;
 import java.util.Random;
 import java.util.Scanner;
 
-import static com.company.game.Figure.*;
 
 public class GameLogic {
+
     Figure firstPlayerStep;
     Figure secondPlayerStep;
 
@@ -14,16 +14,13 @@ public class GameLogic {
         System.out.println("Let's start the game ! ");
         System.out.println("Rock, Scissors or Paper ?");
 
-         Figure firstPlayerStep = playerChoice();
+        firstPlayerStep = playerChoice();
          System.out.println("Your choice: " + firstPlayerStep );
 
-         Figure secondPlayerStep = compChoice();
+        secondPlayerStep = compChoice();
         System.out.println("Computer choice: " + secondPlayerStep);
 
-         String s = result(secondPlayerStep);
-        System.out.println(s);
-
-
+        System.out.println(result());
     }
 
     public Figure compChoice(){
@@ -45,25 +42,25 @@ public class GameLogic {
                 case 'R':
                     return Figure.ROCK;
                 case 'S':
-                    return Figure.PAPER;
-                case 'P':
                     return Figure.SCISSORS;
+                case 'P':
+                    return Figure.PAPER;
             }
         }
         return playerChoice();
     }
 
-    public String result(Figure comp){
+    public String result(){
         String s = "You win!";
         String a = "You lost!";
         String b = "It's TIE !";
-        if (secondPlayerStep == comp ){
+        if (firstPlayerStep == secondPlayerStep ){
             return b;
         }
-        return switch (secondPlayerStep) {
-            case ROCK -> (comp == Figure.SCISSORS ? s : a);
-            case PAPER -> (comp == Figure.ROCK ? s : a);
-            case SCISSORS -> (comp == Figure.PAPER ? s : a);
+        return switch (firstPlayerStep) {
+            case ROCK -> (secondPlayerStep== Figure.SCISSORS ? s : a);
+            case PAPER -> (secondPlayerStep == Figure.ROCK ? s : a);
+            case SCISSORS -> (secondPlayerStep == Figure.PAPER ? s : a);
         };
     }
 }
