@@ -5,25 +5,31 @@ import java.util.Scanner;
 
 
 public class GameLogic {
+    Field field = new Field();
 
-    Figure firstPlayerStep;
-    Figure secondPlayerStep;
-
+    public static final String  TIE = "It's tie!";
+    public static final String GREETING_MESSAGE = "Let's start the game !";
+    public static final String ASK_FOR_CHOICE = "Rock, Scissors or Paper ?";
+    public static final String YOUR_CHOICE = "Your choice: ";
+    public static final String COM_CHOICE = "Computer choice: ";
 
     public void gameStart() {
-        System.out.println("Let's start the game ! ");
-        System.out.println("Rock, Scissors or Paper ?");
+        System.out.println(GREETING_MESSAGE);
+        System.out.println(ASK_FOR_CHOICE);
 
-        firstPlayerStep = playerChoice();
-         System.out.println("Your choice: " + firstPlayerStep );
+        field.setFirstPlayerStep(playerChoice());
+         System.out.println(YOUR_CHOICE + field.getFirstPlayerStep());
 
-        secondPlayerStep = compChoice();
-        System.out.println("Computer choice: " + secondPlayerStep);
+         field.setSecondPlayerStep(compChoice());
+        System.out.println(COM_CHOICE + field.getSecondPlayerStep());
 
-        System.out.println(result());
+        if (compareChoice() != null)
+            System.out.println(compareChoice());
+        else System.out.println(TIE);
+
     }
 
-    public Figure compChoice(){
+    private Figure compChoice(){
         Random rand = new Random();
         return switch (rand.nextInt(3)) {
             case 0 -> Figure.ROCK;
@@ -32,7 +38,7 @@ public class GameLogic {
         };
     }
 
-    public Figure playerChoice(){
+    private Figure playerChoice(){
         Scanner inputScanner = new Scanner(System.in);
         String s = inputScanner.nextLine();
         s = s.toUpperCase();
@@ -50,17 +56,14 @@ public class GameLogic {
         return playerChoice();
     }
 
-    public String result(){
-        String s = "You win!";
-        String a = "You lost!";
-        String b = "It's TIE !";
-        if (firstPlayerStep == secondPlayerStep ){
-            return b;
+    private Players compareChoice(){
+        if (field.getFirstPlayerStep() == field.getSecondPlayerStep() ){
+            return null;
         }
-        return switch (firstPlayerStep) {
-            case ROCK -> (secondPlayerStep== Figure.SCISSORS ? s : a);
-            case PAPER -> (secondPlayerStep == Figure.ROCK ? s : a);
-            case SCISSORS -> (secondPlayerStep == Figure.PAPER ? s : a);
+        return switch (field.getFirstPlayerStep()) {
+            case ROCK -> (field.getSecondPlayerStep() == Figure.SCISSORS ? field.getHuman() : field.getPc());
+            case PAPER -> (field.getSecondPlayerStep() == Figure.ROCK ? field.getHuman(): field.getPc());
+            case SCISSORS -> (field.getSecondPlayerStep() == Figure.PAPER ? field.getHuman() : field.getPc());
         };
     }
 }
