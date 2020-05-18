@@ -3,15 +3,18 @@ package com.company.game;
 import java.util.Random;
 import java.util.Scanner;
 
-
 public class GameLogic {
     Field field = new Field();
+    private final Player human = Player.PLAYER;
+    private final Player pc = Player.COMPUTER;
+
 
     public static final String  TIE = "It's tie!";
     public static final String GREETING_MESSAGE = "Let's start the game !";
     public static final String ASK_FOR_CHOICE = "Rock, Scissors or Paper ?";
     public static final String YOUR_CHOICE = "Your choice: ";
     public static final String COM_CHOICE = "Computer choice: ";
+    public static final String WINNER = "The winner is: ";
 
     public void gameStart() {
         System.out.println(GREETING_MESSAGE);
@@ -24,7 +27,7 @@ public class GameLogic {
         System.out.println(COM_CHOICE + field.getSecondPlayerStep());
 
         if (compareChoice() != null)
-            System.out.println(compareChoice());
+            System.out.println(WINNER + compareChoice());
         else System.out.println(TIE);
 
     }
@@ -56,14 +59,14 @@ public class GameLogic {
         return playerChoice();
     }
 
-    private Players compareChoice(){
+    private Player compareChoice(){
         if (field.getFirstPlayerStep() == field.getSecondPlayerStep() ){
             return null;
         }
         return switch (field.getFirstPlayerStep()) {
-            case ROCK -> (field.getSecondPlayerStep() == Figure.SCISSORS ? field.getHuman() : field.getPc());
-            case PAPER -> (field.getSecondPlayerStep() == Figure.ROCK ? field.getHuman(): field.getPc());
-            case SCISSORS -> (field.getSecondPlayerStep() == Figure.PAPER ? field.getHuman() : field.getPc());
+            case ROCK -> (field.getSecondPlayerStep() == Figure.SCISSORS ? human : pc);
+            case PAPER -> (field.getSecondPlayerStep() == Figure.ROCK ? human : pc);
+            case SCISSORS -> (field.getSecondPlayerStep() == Figure.PAPER ? human : pc);
         };
     }
 }

@@ -5,8 +5,6 @@ public class Field {
     private Figure firstPlayerStep;
     private Figure secondPlayerStep;
 
-    private final Players human = Players.PLAYER;
-    private final Players pc = Players.COMPUTER;
 
     public Figure getFirstPlayerStep() {
         return firstPlayerStep;
@@ -23,13 +21,4 @@ public class Field {
     public void setSecondPlayerStep(Figure figure) {
         this.secondPlayerStep = figure;
     }
-
-    public Players getHuman(){
-        return human;
-    }
-
-    public Players getPc(){
-        return pc;
-    }
-
 }
